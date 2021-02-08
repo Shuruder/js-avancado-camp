@@ -1,39 +1,62 @@
-// Default function Argument
-// DFA serve para situações onde caso esqueçamos de declarar um valor
-// temos um valor padrão para impedir erros garantindo o funcionamento
+// Enhanced Object Literals
 
+//maneira classica de declarar objetos
 /*
-function multiply (a, b){
-    // essa declaração faz com que b caso não declarado (false) seja igual a 1
-    b = b || 1;
-    return a * b;
+var obj = {
+    prop1: 'DIO';
 }
-
-console.log(multiply(5));
 */
 
-/*
-// com o ES6 podemos definir valores padrão nos argumentos diretamente
-// Importante a ordem na argumentação, onde um argumento não pode ser reutiizado se nem foi declarado
-function multiply (a = 2, b = 1){
-    return a * b;
+// Em Enhanced Object Literals
+
+var prop1 = 'Digital Innovation One'
+
+var obj = {
+    prop1
+};
+
+console.log(obj);
+
+// Isso pode ser feito também para funções
+// Dessa forma elimina a necessidade de repetir palavras
+
+function method1() {
+    console.log('method called');
 }
 
-console.log(multiply(5));
+var obj2 = {
+    method1
+}; 
+
+obj2.method1();
+
+// Funciona também para omitir function
+
+var obj3 = {
+    sum(a, b) {
+        return a + b;
+    }
+};
+
+console.log(obj3.sum(1, 5));
+
+//  Outra forma de operação
+
+/*
+var propName = 'test';
+
+var obj4 = {};
+
+obj4[propName] = 'prop value';
+
+console.log(obj4);
 */
 
-// lazy evaluation
-// quer dizer que a função só vai ativar quando for chamada
-// no caso em que o valor não seja declarado garantindo que seja acessada no momento certo
-function randomNumber() {
-    console.log('Generating a random number...');
+// com o ES6 encurta o código centralizando as declaração do objeto literal
+var propName = 'test';
 
-    return Math.random()*10;
-}
+var obj4 = {
+    [propName + 'concat']: 'prop value'
+};
 
-function multiply(a, b = randomNumber()) {
-    return a * b;
-}
-
-console.log(multiply(5));
-console.log(multiply(5));
+console.log(obj4);
