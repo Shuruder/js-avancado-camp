@@ -1,78 +1,85 @@
-// rest operator, spread operator
-// onde são suados:
-// strings, arrays, literal objects e objetos iteraveis
-// Objetos iteraveis geralmente são strings e arrays
-const separa = '---------------';
+// Part2 de Rest, Spread e Destructing
+// Destructuring Assigment
+const separa = ("--------------------");
 
-const str = 'Digital Innovation One';
+var arr = ['Apple', 'Banana', 'Orange', ['Tomato']];
 
-function logArgs(...args) {
-    console.log(args);
-}
+var apple = arr[0];
+var banana = arr[1];
+var orange = arr[2];
+var tomato = arr[3][0];
 
-logArgs(...str);
+// jeito muito custoso, mas resolvendo com ES6
 
-//spread para transformar array em argumento da função
+var [apple2, banana2, orange2, [tomato2]] = [
+    'Apple', 
+    'Banana', 
+    'Orange',
+    ['Tomato']
+]
+
+// mesmo resultado, mais enxuto
+console.log(apple, apple2, tomato2);
 console.log(separa);
+// mas cuidado com quebra de array dentro de array,
+// pois é necessário iniciar o array com um valor no destructuring
+// "Dois niveis de destructuring
 
-const arr = [1, 2, 3, 4];
-
-function logArgs() {
-    console.log(arguments); // se colocados argumentos finitos, então ele filtra o array
-}
-
-logArgs(...arr);
-
-// Continuar em 20:36
-// unir arrays
-console.log(separa);
-//const arr2 = arr.concat([5, 6, 7]);
-//agora com spread
-const arr2 = [...arr, 5, 6, 7];
-
-const arr3 = [...arr2, ...arr, 0, 0, 0];
-
-console.log(arr3);
-
-console.log(separa);
-
-// No caso de objetos literais é diferente
-
-const obj = {
-    test: 123
+var obj = {
+    name: 'Gabriel'
 };
 
-// Ele só funciona dessa forma, e em objetos iteraveis
-// comentado em generators
-// dito isso não podemos usar para construir um array com spread no objeto
-// no caso só pode ser usado para construir novos objetos
+var name = obj.name;
 
-const obj2 = {
-    ...obj,
-    test2: 'hello'
-};
+var { name } = obj;
 
-// outro detalhe, a ordem das chaves faz toda diferença
-// no spread a ultima informação inserida com o mesmo nome, prevalece
-// Spread é geralmente usado para criar clones de objetos
+console.log(name);
 
-// const obj = {}; const obj2 = obj; é diferente de
-// const obj2 = {...obj}; dessa forma não altera valores do primeiro
+// Destructuring com objetos
+// sem usar
 
-// teste funcional total
-
-const obj3 = {
-    test: 123,
-    subObj:  {
-        test: 123
+var arr2 = [{ name: 'Apple', type: 'fruit'}];
+var obj2 = {
+    name: 'Brandini',
+    props: {
+        age: 26,
+        favoriteColors: ['Black', 'Blue']
     }
 };
 
-const obj4 = { ...obj3, subObj: { ...obj3.subObj } };
+//var name = obj2.name;
+//var age = obj.props.age;
+//var fruit1 = arr[0].name;
 
-obj4.subObj.test = 456;
+// usando destructuring
+// no var indicamos o objeto que queremos quebrar e onde vamos atribuir (direita para esquerda)
+var {name} = obj2;
+// e podemos usar novamente a ideia de clone do ES6
+var{name: name2} = obj2;
+name2 = 'Shuruder'; //criou nova variavel sem alterar o obj2
 
-console.log(obj2);
+// agora quebrando objeto dentro de objeto
+// Destructuring de multiniveis com array
+var {
+    props: { age: age2, favoriteColors: [color1, color2] } //mesmo não sendo declaração customizada precisamos dos :
+} = obj2;
+
+var [{ name: fruitName }] = arr2;
+console.log(fruitName);
+
 console.log(separa);
-console.log(obj3);
-// dessa forma não vai ser alterado pois o outro obj4 é clone do 3
+// Com functions
+
+function sum(arr) {
+    return arr[0] + arr[1];
+}
+
+console.log(sum([5, 5]));
+
+// destructuring
+
+function sumD([a, b] = [0, 0]) { //podemos ainda impor default values na segunda caixa dessa forma vai funcionar até sem valores quando chamado
+    return a + b;
+}
+
+console.log(sumD([5, 6]));
