@@ -1,78 +1,78 @@
-console.log('--------------Rest e Spread---------------');
-// Conheça Rest e Spread Operator
+// rest operator, spread operator
+// onde são suados:
+// strings, arrays, literal objects e objetos iteraveis
+// Objetos iteraveis geralmente são strings e arrays
+const separa = '---------------';
 
-function sum(a, b) {
-    return a + b;
+const str = 'Digital Innovation One';
+
+function logArgs(...args) {
+    console.log(args);
 }
 
-console.log(sum(5,5));
+logArgs(...str);
 
-// Mas e se eu quisesse somar inumeros argumentos?
-// antes do ES6 o normal era fazer o seguinte
+//spread para transformar array em argumento da função
+console.log(separa);
 
-function sum2(a, b) {
-    var value = 0;
+const arr = [1, 2, 3, 4];
 
-    for (var i = 0; i < arguments.length; i++) {
-        value += arguments[i];
+function logArgs() {
+    console.log(arguments); // se colocados argumentos finitos, então ele filtra o array
+}
+
+logArgs(...arr);
+
+// Continuar em 20:36
+// unir arrays
+console.log(separa);
+//const arr2 = arr.concat([5, 6, 7]);
+//agora com spread
+const arr2 = [...arr, 5, 6, 7];
+
+const arr3 = [...arr2, ...arr, 0, 0, 0];
+
+console.log(arr3);
+
+console.log(separa);
+
+// No caso de objetos literais é diferente
+
+const obj = {
+    test: 123
+};
+
+// Ele só funciona dessa forma, e em objetos iteraveis
+// comentado em generators
+// dito isso não podemos usar para construir um array com spread no objeto
+// no caso só pode ser usado para construir novos objetos
+
+const obj2 = {
+    ...obj,
+    test2: 'hello'
+};
+
+// outro detalhe, a ordem das chaves faz toda diferença
+// no spread a ultima informação inserida com o mesmo nome, prevalece
+// Spread é geralmente usado para criar clones de objetos
+
+// const obj = {}; const obj2 = obj; é diferente de
+// const obj2 = {...obj}; dessa forma não altera valores do primeiro
+
+// teste funcional total
+
+const obj3 = {
+    test: 123,
+    subObj:  {
+        test: 123
     }
-    return value
-}
+};
 
-console.log(sum2(5, 5, 5, 2, 3));
+const obj4 = { ...obj3, subObj: { ...obj3.subObj } };
 
-// Agora com rest operator ...
+obj4.subObj.test = 456;
 
-function sum3(...args) {
-    //console.log(args);
-    //console.log(arguments);
-    return args.reduce((acc, value) => acc + value, 0);
-}
-
-console.log(sum3(5, 5, 5, 2, 3));
-
-// e quando trabalhando com arrow functions
-
-// vai dar erro de referencia porque o arguments n foi definido
-/*
-const sum4 = () => {
-    console.log(arguments);
-}
-
-console.log(sum4(5, 5, 5, 2, 3));
-*/
-
-// correção com rest
-
-// vale dizer que dessa forma é bom para trabalhar com alguns frameworks
-// pois separa apenas os argumentos que queremos de um restante/montante
-const sum5 = (a, b, ...rest) => {
-    console.log(a, b, rest);
-}
-
-console.log(sum5(5, 5, 5, 2, 3));
-
-//-----
-
-console.log('-------------------');
-
-const sum6 = (...rest) => {
-    return multiply.apply(undefined, rest);
-}
-
-const multiply = (...args) => args.reduce((acc, value) => acc * value, 1)
-
-console.log(sum6(5, 5, 5, 2, 3));
-
-console.log('--------rest e spread-----------');
-
-// rest operator, spread operator...
-// se escreve da mesma forma, porem o seu funcionamento é contrário e diferente do rest
-// quebrando listas e 'espalhando' argumentos
-const multiply2 = (...args) => args.reduce((acc, value) => acc * value, 1);
-
-const sum7 = (...rest) => {
-    return multiply2(...rest);
-}
-
-console.log(sum7(5, 5, 5, 2, 3));
+console.log(obj2);
+console.log(separa);
+console.log(obj3);
+// dessa forma não vai ser alterado pois o outro obj4 é clone do 3
